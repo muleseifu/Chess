@@ -173,7 +173,7 @@ The evaluation function scores positions based on material balance, piece-square
 ## 📁 Project Structure
 
 ```
-chess-byteknights/
+Chess/
 ├── src/
 │   └── chess/
 │       ├── Main.java
