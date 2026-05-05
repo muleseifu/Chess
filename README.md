@@ -1,156 +1,204 @@
-# ♟️ Chess Game – Full System Design & Implementation
+# ♟️ Chess Game — ByteKnights
 
-A complete object-oriented Chess game built in Java, featuring a clean architecture, full rule enforcement, interactive GUI, and an AI opponent powered by Minimax with Alpha-Beta pruning.
+> A fully-featured two-player chess application with an AI opponent, built in Java using Swing/JavaFX.
 
----
-
-## 🚀 Features
-
-### 🎮 Core Gameplay
-
-* Fully functional 2-player chess (PvP)
-* Player vs Bot mode (PvB)
-* Turn-based game management
-* Legal move validation (no illegal states)
-
-### ♜ Complete Chess Rules
-
-* ✔ Castling (King-side & Queen-side)
-* ✔ En Passant
-* ✔ Pawn Promotion (with selection UI)
-* ✔ Check / Checkmate detection
-* ✔ Stalemate detection
-
-### 🤖 AI Engine
-
-* Minimax algorithm
-* Alpha-Beta pruning optimization
-* Configurable difficulty levels:
-
-  * Easy (depth 1)
-  * Medium (depth 3)
-  * Hard (depth 5)
-
-### 🧠 System Design Highlights
-
-* Object-Oriented Architecture
-* Separation of Concerns (Model / GUI / AI)
-* Observer Pattern for UI updates
-* Deep-copy board simulation for AI
-
-### 🖥️ GUI (Swing / JavaFX)
-
-* Interactive 8×8 chess board
-* Move highlighting system
-* Captured pieces display
-* Move history tracking
-* Game status indicators (Check, Mate, etc.)
-* Control panel (Undo, Resign, Restart, Draw)
+![Java](https://img.shields.io/badge/Java-17%2B-orange?logo=java)
+![OOP](https://img.shields.io/badge/Course-Object--Oriented%20Programming-blue)
+![Year](https://img.shields.io/badge/Year-2024-lightgrey)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
-## 🏗️ Project Structure
+## 👥 Team
+
+**Group:** ByteKnights &nbsp;|&nbsp; **Course:** Object-Oriented Programming 2024 &nbsp;|&nbsp; **Instructor:** Hailemelekot D.
+
+| # | Name | Student ID |
+|---|------|------------|
+| 1 | Abere Chanie | UGR/0121/17 |
+| 2 | Muluken Seifu | UGR/7376/17 |
+| 3 | Siyane Solomon | UGR/5908/17 |
+| 4 | Yomiyu Adisu | UGR/0197/17 |
+
+---
+
+## 📖 Overview
+
+This project implements a complete chess game following standard chess rules. It supports two modes — **Player vs Player** and **Player vs Bot** — with an AI engine powered by Minimax with Alpha-Beta pruning. The architecture strictly follows object-oriented principles: inheritance, encapsulation, separation of concerns, and the Observer pattern.
+
+---
+
+## ✨ Features
+
+- ♟️ Full chess rules — castling, en passant, pawn promotion, check/checkmate/stalemate detection
+- 🤖 AI opponent with three difficulty levels (Easy / Medium / Hard)
+- 🔄 Undo/redo move history with algebraic notation display
+- 🎨 Multiple board themes (Classic / Wood / Dark)
+- ⏱️ Optional game clock with configurable time per player
+- 🔊 Sound effects for moves and captures
+- 🏳️ Resign and draw offer support
+
+---
+
+## 🏗️ Architecture
+
+The project is organized into five packages:
 
 ```
 chess/
-│
 ├── model/
-│   ├── pieces/        # Piece hierarchy (Piece, King, Queen, etc.)
-│   ├── board/         # Board & Cell logic
-│   └── game/          # Game state & turn management
-│
-├── ai/
-│   └── Bot.java       # Minimax + Alpha-Beta AI
-│
-├── gui/
-│   ├── panels/        # Game UI components
-│   └── dialogs/       # Settings & interactions
-│
-└── util/
-    ├── MoveHistory
-    └── Constants
+│   ├── pieces/     # Piece hierarchy — abstract Piece + 6 concrete classes
+│   └── board/      # Cell, Board, move logic
+├── model/game/     # Game, GameState, turn management
+├── ai/             # Bot — Minimax with Alpha-Beta pruning
+├── gui/            # All Swing/JavaFX panels and dialogs
+└── util/           # Constants, MoveHistory, MoveRecord
+```
+
+### Class Hierarchy
+
+```
+Piece (abstract)
+├── Rook
+├── Bishop
+├── Knight
+├── Pawn
+├── Queen
+└── King
+```
+
+### Key Design Patterns
+
+| Pattern | Where used |
+|---------|-----------|
+| **Inheritance** | All pieces extend the abstract `Piece` base class |
+| **Observer** | `Board` notifies `GamePanel` via `BoardListener` on every state change |
+| **Strategy** | `Bot` uses a pluggable `BoardEvaluator` for heuristic scoring |
+| **Command** | `MoveRecord` captures full move state for undo/redo |
+
+---
+
+## 🖥️ GUI Flow
+
+```
+Application Launch
+       │
+  Main Menu Panel
+       │
+     Mode?
+    /      \
+ PvP        PvB (select difficulty)
+    \      /
+   Game Panel
+  (Board + Side + Controls)
+       │
+   Game Over?
+   /        \
+ Yes          No → Continue Playing
+   │
+Result Dialog (Win / Draw / Resign)
+   │
+Play Again?
+ /       \
+Yes       No → Main Menu
 ```
 
 ---
 
-## 🧩 Key Components
+## 🚀 Getting Started
 
-### 🔹 Board
+### Prerequisites
 
-Handles:
+- Java 17 or higher
+- A Java IDE (IntelliJ IDEA, Eclipse, or VS Code with Java Extension Pack)
 
-* Piece placement
-* Move execution
-* Rule enforcement
-* Check & checkmate detection
+### Clone & Run
 
-### 🔹 Game
+```bash
+git clone https://github.com/<your-username>/chess-byteknights.git
+cd chess-byteknights
+```
 
-Controls:
+**Compile:**
+```bash
+javac -sourcepath src -d out src/chess/Main.java
+```
 
-* Turn switching
-* Game modes (PvP / PvB)
-* Game status updates
+**Run:**
+```bash
+java -cp out chess.Main
+```
 
-### 🔹 Piece Hierarchy
-
-Abstract base class with concrete implementations:
-
-* King, Queen, Rook, Bishop, Knight, Pawn
-
-### 🔹 AI Bot
-
-* Generates all legal moves
-* Evaluates board states
-* Uses Minimax with Alpha-Beta pruning
+Or simply open the project in your IDE and run `Main.java`.
 
 ---
 
-## 🔄 Game Flow
+## 🎮 How to Play
 
-1. Player selects a piece
-2. Legal moves are highlighted
-3. Player makes a move
-4. Game state updates
-5. AI responds (in PvB mode)
-6. System checks for:
-
-   * Check
-   * Checkmate
-   * Stalemate
+1. Launch the application — the **Main Menu** appears.
+2. Choose **Play vs Person** for two human players, or **Play vs Bot** and select a difficulty.
+3. Click a piece to select it — legal moves are highlighted on the board.
+4. Click a highlighted square to move.
+5. Special moves (castling, en passant, pawn promotion) are handled automatically.
+6. Use the **Control Panel** to undo, resign, offer a draw, or return to the menu.
 
 ---
 
-## 🧪 Future Improvements
+## 🤖 AI Engine
 
-* [ ] Add UML diagrams (Class, Sequence)
-* [ ] Improve AI evaluation heuristics
-* [ ] Add save/load game functionality
-* [ ] Implement multiplayer (network mode)
-* [ ] Enhance UI/UX (animations, themes)
+The `Bot` class (in `chess.ai`) uses **Minimax with Alpha-Beta pruning**:
 
----
+| Difficulty | Search Depth |
+|------------|-------------|
+| Easy | 1 ply |
+| Medium | 3 ply |
+| Hard | 5 ply |
 
-## 🛠️ Technologies Used
-
-* Java
-* Swing / JavaFX
-* Object-Oriented Design Principles
+The evaluation function scores positions based on material balance, piece-square position tables, and mobility. The bot always auto-promotes pawns to Queen.
 
 ---
 
-## 📌 Author
+## ♟️ Special Rules
 
-Developed as a full system design + implementation project focusing on clean architecture and complete chess rule handling.
+**Castling** — Available when neither the king nor rook has moved, the path between them is clear, and the king is not in check or passing through an attacked square.
+
+**En Passant** — A pawn that advances two squares sets an `enPassantVulnerable` flag for exactly one turn, allowing adjacent enemy pawns to capture diagonally.
+
+**Pawn Promotion** — When a pawn reaches the opposite back rank, a dialog lets the player choose Queen, Rook, Bishop, or Knight.
+
+**Check Detection** — After every move, `Board.isInCheck()` tests whether any enemy piece's move list includes the king's cell. Moves that leave the own king in check are filtered out before being offered as legal moves.
 
 ---
 
-## ⭐ Contributing
+## 📁 Project Structure
 
-Contributions, suggestions, and improvements are welcome!
+```
+chess-byteknights/
+├── src/
+│   └── chess/
+│       ├── Main.java
+│       ├── model/
+│       │   ├── pieces/         # Piece.java, Rook.java, Bishop.java, ...
+│       │   └── board/          # Cell.java, Board.java
+│       ├── model/game/         # Game.java, GameMode.java, GameStatus.java
+│       ├── ai/                 # Bot.java, BoardEvaluator.java
+│       ├── gui/                # MainMenuPanel.java, GamePanel.java, ...
+│       └── util/               # MoveHistory.java, MoveRecord.java, Constants.java
+├── resources/
+│   └── images/                 # Piece sprites (PNG)
+├── docs/
+│   └── Chess_Design_Document.pdf
+└── README.md
+```
+
+---
+
+## 📄 Documentation
+
+The full system design document — including UML class diagrams, method specifications, interaction sequences, and component architecture — is available in [`docs/Chess_Design_Document.pdf`](docs/Chess_Design_Document.pdf).
 
 ---
 
 ## 📜 License
 
-This project is open-source and available under the MIT License.
+This project was created for academic purposes as part of the **Object-Oriented Programming** course (2024). Feel free to use it for learning.
