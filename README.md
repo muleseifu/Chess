@@ -115,8 +115,8 @@ Yes       No → Main Menu
 ### Clone & Run
 
 ```bash
-git clone https://github.com/<your-username>/chess-byteknights.git
-cd chess-byteknights
+git clone https://github.com/muleseifu/Chess.git
+cd Chess
 ```
 
 **Compile:**
