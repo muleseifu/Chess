@@ -13,7 +13,7 @@
 
 **Group:** ByteKnights &nbsp;|&nbsp; **Course:** Object-Oriented Programming 2024 &nbsp;|&nbsp; **Instructor:** Hailemelekot D.
 
-| # | Name | Student ID |
+| # | Name | Student ID  |
 |---|------|------------|
 | 1 | Abere Chanie | UGR/0121/17 |
 | 2 | Muluken Seifu | UGR/7376/17 |
