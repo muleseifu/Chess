@@ -1,13 +1,14 @@
-package chess.model.pieces;
+package Chess.model.pieces;
 
-import chess.model.board.Board;
-import chess.model.board.Cell;
+import Chess.model.board.Board;
+import Chess.model.board.Cell;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Piece {
-    public Rook(int color, String id, String imagePath) {
-        super(color, id, imagePath);
+    public Rook(String id, int color, String imagePath) {
+        super(id, color, imagePath);
+
     }
 
     @Override
@@ -40,7 +41,7 @@ public class Rook extends Piece {
 
     @Override
     public Piece getCopy() {
-        Rook copy = new Rook(this.color, this.id, this.imagePath);
+        Rook copy = new Rook(this.id, this.color, this.imagePath);
         copy.availability = this.availability;
         copy.hasMoved = this.hasMoved;
         return copy;

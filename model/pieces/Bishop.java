@@ -1,7 +1,7 @@
-package chess.model.pieces;
+package Chess.model.pieces;
 
-import chess.model.board.Board;
-import chess.model.board.Cell;
+import Chess.model.board.Board;
+import Chess.model.board.Cell;
 import java.util.List;
 import java.util.ArrayList;
 public class Bishop extends Piece {
