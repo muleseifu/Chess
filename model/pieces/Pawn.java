@@ -7,7 +7,12 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
-    boolean enPassantVulnerable = false;
+    public boolean enPassantVulnerable = false;
+
+    public Pawn(int color){
+        super();
+        this.color = color;
+    }
 
     public Pawn(String id, int color, String imagePath) {
         super(id, color, imagePath);

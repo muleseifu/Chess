@@ -7,6 +7,11 @@ import java.util.ArrayList;
 
 public class Bishop extends Piece {
 
+    public Bishop(int color){
+        super();
+        this.color = color;
+    }
+
     public Bishop(String id, int color, String imagePath) {
         super(id, color, imagePath);
     }

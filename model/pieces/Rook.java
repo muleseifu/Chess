@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Piece {
+
+    public Rook(int color) {
+        super();
+        this.color = color;
+    }
+
     public Rook(String id, int color, String imagePath) {
         super(id, color, imagePath);
 

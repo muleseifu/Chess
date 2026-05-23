@@ -7,6 +7,11 @@ import java.util.ArrayList;
 
 public class Knight extends Piece {
 
+    public Knight(int color){
+        super();
+        this.color = color;
+        }
+
     public Knight(String id, int color, String imagePath) {
         super(id, color, imagePath);
     }

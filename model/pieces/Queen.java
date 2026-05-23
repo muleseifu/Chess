@@ -8,6 +8,11 @@ import Chess.model.board.Cell;
 
 public class Queen extends Piece {
 
+    public Queen(int color){
+        super();
+        this.color= color;
+    }
+
     public Queen(String id, int color, String imagePath) {
         super(id, color, imagePath);
     }

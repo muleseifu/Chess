@@ -1,4 +1,3 @@
-
 package Chess.model.board;
  
 //import Chess.gui.BoardListener;
@@ -8,7 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
  
-public class Board implements BoardListener {
+public class Board {
  
     private Cell[][] cells;
     private List<Piece> whitePieces;
@@ -48,15 +47,16 @@ public class Board implements BoardListener {
         cells[backRow][0].setPiece(rook1);
  
         Knight knight1 = new Knight(color);
-        knight1.SetId(side + "_N1");
+        knight1.setId(side + "_N1");
         cells[backRow][1].setPiece(knight1);
+
  
         Bishop bishop1 = new Bishop(color);
-        bishop1.SetId(side + "_B1");
+        bishop1.setId(side + "_B1");
         cells[backRow][2].setPiece(bishop1);
  
         Queen queen = new Queen(color);
-        queen.SetId(side + "_Q");
+        queen.setId(side + "_Q");
         cells[backRow][3].setPiece(queen);
  
         King king = new King(color);
@@ -118,6 +118,7 @@ public class Board implements BoardListener {
         clearEnPassantFlags(piece.getColor());
  
         // Handle castling
+
         if (piece instanceof King) {
             int colDiff = to.getY() - from.getY();
             if (Math.abs(colDiff) == 2) {
@@ -127,14 +128,14 @@ public class Board implements BoardListener {
                     // King-side
                     Piece rook = cells[row][7].getPiece();
                     if (rook instanceof Rook) {
-                        performCastle((King) piece, (Rook) rook);
+                        performCastle(from, cells[row][7], (King) piece, (Rook) rook);
                         return;
                     }
                 } else {
                     // Queen-side
                     Piece rook = cells[row][0].getPiece();
                     if (rook instanceof Rook) {
-                        performCastle((King) piece, (Rook) rook);
+                        performCastle(from, cells[row][0], (King) piece, (Rook) rook);
                         return;
                     }
                 }
@@ -146,18 +147,20 @@ public class Board implements BoardListener {
  
         // Handle en passant capture
         if (piece instanceof Pawn) {
-            int colDiff = to.getY() - from.getY();
-            int rowDiff = to.getX() - from.getX();
-            // En passant: diagonal move to empty cell
-            if (Math.abs(colDiff) == 1 && to.isEmpty()) {
-                performEnPassant((Pawn) piece, to);
-                return;
-            }
-            // Set en passant vulnerability on double advance
-            if (Math.abs(rowDiff) == 2) {
-                ((Pawn) piece).enPassantVulnerable = true;
-            }
-        }
+                int colDiff = to.getY() - from.getY();
+                int rowDiff = to.getX() - from.getX();
+
+                // En passant
+                if (Math.abs(colDiff) == 1 && to.isEmpty()) {
+                    performEnPassant(from, to, (Pawn) piece);
+                    return;
+                }
+
+                // Double advance
+                if (Math.abs(rowDiff) == 2) {
+                    ((Pawn) piece).enPassantVulnerable = true;
+    }
+}
  
         // Standard move
         if (!to.isEmpty()) {
@@ -294,70 +297,47 @@ public class Board implements BoardListener {
         listeners.add(l);
     }
  
-    public void performCastle(King king, Rook rook) {
-        // Find king and rook cells
-        Cell kingCell = null, rookCell = null;
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                Cell c = cells[row][col];
-                if (!c.isEmpty()) {
-                    if (c.getPiece() == king) kingCell = c;
-                    if (c.getPiece() == rook) rookCell = c;
-                }
-            }
-        }
-        if (kingCell == null || rookCell == null) return;
+    public void performCastle(Cell kingCell, Cell rookCell,
+                          King king, Rook rook) {
+
+                    int row = kingCell.getX();
+                    boolean kingSide = rookCell.getY() > kingCell.getY();
+
+                    int kingTargetCol = kingSide ? 6 : 2;
+                    int rookTargetCol = kingSide ? 5 : 3;
+
+                    kingCell.removePiece();
+                    rookCell.removePiece();
+
+                    cells[row][kingTargetCol].setPiece(king);
+                    cells[row][rookTargetCol].setPiece(rook);
+
+                    king.setMoved();
+                    rook.setMoved();
+
+                    notifyListeners();
+}
  
-        int row = kingCell.getX();
-        boolean kingSide = rookCell.getY() > kingCell.getY();
- 
-        int kingTargetCol = kingSide ? 6 : 2;
-        int rookTargetCol = kingSide ? 5 : 3;
- 
-        kingCell.removePiece();
-        rookCell.removePiece();
- 
-        cells[row][kingTargetCol].setPiece(king);
-        cells[row][rookTargetCol].setPiece(rook);
- 
-        king.x = row;
-        king.y = kingTargetCol;
-        king.setMoved();
-        rook.setMoved();
- 
-        notifyListeners();
+    public void performEnPassant(Cell from, Cell to, Pawn pawn) {
+
+    // Captured pawn is beside the moving pawn
+    Cell capturedPawnCell = cells[from.getX()][to.getY()];
+
+    Piece capturedPawn = capturedPawnCell.getPiece();
+
+    if (capturedPawn != null) {
+        capturedPawn.setAvailable(false);
+        removeFromList(capturedPawn);
+        capturedPawnCell.removePiece();
     }
- 
-    public void performEnPassant(Pawn pawn, Cell targetCell) {
-        // Find pawn's current cell
-        Cell pawnCell = null;
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                Cell c = cells[row][col];
-                if (!c.isEmpty() && c.getPiece() == pawn) {
-                    pawnCell = c;
-                    break;
-                }
-            }
-            if (pawnCell != null) break;
-        }
-        if (pawnCell == null) return;
- 
-        // The captured pawn is on the same row as pawnCell, same col as targetCell
-        Cell capturedPawnCell = cells[pawnCell.getX()][targetCell.getY()];
-        Piece capturedPawn = capturedPawnCell.getPiece();
-        if (capturedPawn != null) {
-            capturedPawn.setAvailable(false);
-            removeFromList(capturedPawn);
-            capturedPawnCell.removePiece();
-        }
- 
-        pawnCell.removePiece();
-        targetCell.setPiece(pawn);
-        pawn.setMoved();
- 
-        notifyListeners();
-    }
+
+    from.removePiece();
+    to.setPiece(pawn);
+
+    pawn.setMoved();
+
+    notifyListeners();
+}
  
     // ---- Accessors for pieces ----
  
