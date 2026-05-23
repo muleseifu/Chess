@@ -5,8 +5,8 @@ import Chess.model.board.Cell;
 import java.util.ArrayList;
 import java.util.List;
 public class King{
-    int x=pos.getx();
-    int y=pos.gety();
+    int x=pos.getX();
+    int y=pos.getY();
     public Kight(int color,String id,String imagePath){
         super(color,id,imagePath);
     }
