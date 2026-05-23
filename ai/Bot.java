@@ -192,4 +192,8 @@ public class Bot {
         if (p instanceof King) return 20000;
         return 0;
     }
+
+     public void setDifficulty(Difficulty difficulty) {
+        this.depth = difficulty.depth;
+    }
 }
