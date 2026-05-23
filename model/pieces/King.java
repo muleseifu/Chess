@@ -4,7 +4,7 @@ import Chess.model.board.Board;
 import Chess.model.board.Cell;
 import java.util.ArrayList;
 import java.util.List;
-public class King{
+public class King extends Piece {
     int x=pos.getX();
     int y=pos.getY();
     public Kight(int color,String id,String imagePath){
