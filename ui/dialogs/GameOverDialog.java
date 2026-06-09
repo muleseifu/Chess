@@ -31,6 +31,15 @@ public class GameOverDialog extends JDialog {
         JButton restartBtn   = styledButton("Restart");
         JButton mainMenuBtn  = styledButton("Main Menu");
         JButton quitBtn      = styledButton("Quit");
+        
+        restartBtn.setBackground(Color.WHITE);
+        restartBtn.setForeground(Color.BLACK);
+        
+        mainMenuBtn.setBackground(Color.WHITE);
+        mainMenuBtn.setForeground(Color.BLACK);
+        
+        quitBtn.setBackground(Color.WHITE);
+        quitBtn.setForeground(Color.BLACK);
 
         restartBtn.addActionListener(e  -> { choice = Choice.RESTART;    dispose(); });
         mainMenuBtn.addActionListener(e -> { choice = Choice.MAIN_MENU;  dispose(); });
@@ -72,8 +81,8 @@ public class GameOverDialog extends JDialog {
 
     private JButton styledButton(String text) {
         JButton btn = new JButton(text);
-        btn.setBackground(ColorTheme.BUTTON_BACKGROUND);
-        btn.setForeground(ColorTheme.BUTTON_TEXT);
+        btn.setBackground(Color.RED);
+        btn.setForeground(Color.BLACK);
         btn.setFocusPainted(false);
         btn.setFont(new Font("SansSerif", Font.BOLD, 13));
         btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

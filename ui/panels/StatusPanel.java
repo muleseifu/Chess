@@ -54,7 +54,7 @@ public class StatusPanel extends JPanel {
         PieceColor turn  = board.getCurrentTurn();
         GameState  state = board.getGameState();
 
-        turnLabel.setText((turn == PieceColor.WHITE ? "⬜ White" : "⬛ Black") + "'s turn");
+        turnLabel.setText((turn == PieceColor.WHITE ? "White" : "Black") + "'s turn");
         statusLabel.setText(state.getDisplayMessage());
         statusLabel.setForeground(state == GameState.CHECK || state == GameState.CHECKMATE
             ? new Color(220, 50, 50)

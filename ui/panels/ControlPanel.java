@@ -77,16 +77,16 @@ public class ControlPanel extends JPanel {
 
     private JComboBox<String> styledCombo(String... items) {
         JComboBox<String> cb = new JComboBox<>(items);
-        cb.setBackground(ColorTheme.BUTTON_BACKGROUND);
-        cb.setForeground(ColorTheme.BUTTON_TEXT);
+        cb.setBackground(ColorTheme.CONTROL_BTN_COLOR);
+        cb.setForeground(Color.BLACK);
         cb.setFont(new Font("SansSerif", Font.PLAIN, 12));
         return cb;
     }
 
     private JButton styledButton(String text) {
         JButton btn = new JButton(text);
-        btn.setBackground(ColorTheme.BUTTON_BACKGROUND);
-        btn.setForeground(ColorTheme.BUTTON_TEXT);
+        btn.setBackground(ColorTheme.CONTROL_BTN_COLOR);
+        btn.setForeground(Color.BLACK);
         btn.setFocusPainted(false);
         btn.setFont(new Font("SansSerif", Font.BOLD, 12));
         btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

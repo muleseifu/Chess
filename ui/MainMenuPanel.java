@@ -10,16 +10,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.function.Consumer;
 
-/**
- * The main menu panel shown before a game starts.
- *
- * <p>Completely isolated from the rest of the codebase — it only
- * fires a {@link GameSettings} record to whoever is listening.
- * Nothing here knows about Board, Piece, or ChessWindow.</p>
- */
+
 public class MainMenuPanel extends JPanel {
 
-    /** Carries the player's choices back to the launcher. */
+    
     public static class GameSettings {
         public final GameMode   mode;
         public final Difficulty difficulty;
@@ -34,7 +28,7 @@ public class MainMenuPanel extends JPanel {
 
     private Consumer<GameSettings> onPlay;
 
-    // ── widgets ──────────────────────────────────────────────────────────────
+
     private final JComboBox<String> modeCombo;
     private final JComboBox<String> diffCombo;
     private final JComboBox<String> colorCombo;
@@ -50,7 +44,7 @@ public class MainMenuPanel extends JPanel {
         gbc.gridwidth = 2;
         gbc.gridx     = 0;
 
-        // ── Title ─────────────────────────────────────────────────────────────
+      
         JLabel title = new JLabel("          Play Chess       ", SwingConstants.CENTER);
         title.setFont(new Font("Segoe UI Symbol", Font.BOLD, 52));
         title.setForeground(ColorTheme.PANEL_BACKGROUND);
@@ -58,7 +52,7 @@ public class MainMenuPanel extends JPanel {
         add(title, gbc);
 
 
-        // ── Game mode ─────────────────────────────────────────────────────────
+    
         gbc.insets = new Insets(6, 8, 6, 8);
         gbc.gridy  = 1;
         add(sectionLabel("Game Mode"), gbc);
@@ -67,7 +61,7 @@ public class MainMenuPanel extends JPanel {
         modeCombo.setForeground(ColorTheme.PANEL_BACKGROUND);
         gbc.gridy = 2; add(modeCombo, gbc);
 
-        // ── Difficulty ────────────────────────────────────────────────────────
+    
         gbc.gridy = 3; add(sectionLabel("AI Difficulty"), gbc);
 
         diffCombo = styledCombo("Easy", "Medium", "Hard");
@@ -75,13 +69,12 @@ public class MainMenuPanel extends JPanel {
         diffCombo.setForeground(ColorTheme.PANEL_BACKGROUND);
         gbc.gridy = 4; add(diffCombo, gbc);
 
-        // ── Color ─────────────────────────────────────────────────────────────
+      
         gbc.gridy = 5; add(sectionLabel("Play As"), gbc);
 
         colorCombo = styledCombo("White", "Black");
         gbc.gridy  = 6; add(colorCombo, gbc);
 
-        // toggle difficulty visibility based on mode
         diffCombo.setEnabled(false); // default: HvH
         modeCombo.addActionListener(e ->
                 diffCombo.setEnabled(modeCombo.getSelectedIndex() == 1));
@@ -89,7 +82,7 @@ public class MainMenuPanel extends JPanel {
         modeCombo.addActionListener(e ->
                 colorCombo.setEnabled(modeCombo.getSelectedIndex() == 1));
 
-        // ── Play button ───────────────────────────────────────────────────────
+
         JButton playBtn = playButton();
         playBtn.setFont(new Font("SansSerif", Font.BOLD, 18));
         playBtn.setForeground(ColorTheme.PANEL_BACKGROUND);
@@ -102,7 +95,7 @@ public class MainMenuPanel extends JPanel {
     /** Register the callback that receives settings when the player clicks Play. */
     public void setOnPlay(Consumer<GameSettings> handler) { this.onPlay = handler; }
 
-    // ── helpers ──────────────────────────────────────────────────────────────
+    // ── helpers 
 
     private GameSettings buildSettings() {
         GameMode mode = modeCombo.getSelectedIndex() == 0

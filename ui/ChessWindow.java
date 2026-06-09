@@ -21,15 +21,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-/**
- * The main application window.
- *
- * <p>Wires the {@link GameController} to the UI panels and implements
- * {@link GameEventListener} to keep the view in sync with the model.</p>
- *
- * <p>All Swing updates are dispatched on the Event Dispatch Thread via
- * {@link SwingUtilities#invokeLater}.</p>
- */
+
 public class ChessWindow extends JFrame implements GameEventListener {
 
     private final GameController controller;
@@ -38,7 +30,7 @@ public class ChessWindow extends JFrame implements GameEventListener {
     private final ControlPanel   controlPanel;
     private boolean boardFlipped = false;
 
-    // Remembered so Restart can replay with identical settings
+   
     private chess.ai.strategy.AIStrategyFactory.Difficulty lastDifficulty =
             chess.ai.strategy.AIStrategyFactory.Difficulty.MEDIUM;
 
@@ -64,10 +56,7 @@ public class ChessWindow extends JFrame implements GameEventListener {
                 PieceColor.WHITE);
     }
 
-    /**
-     * Parameterised constructor — called by MainMenuWindow with the player's
-     * chosen settings so the game begins immediately.
-     */
+
     public ChessWindow(GameMode mode,
                        chess.ai.strategy.AIStrategyFactory.Difficulty difficulty,
                        PieceColor humanColor) {
@@ -89,7 +78,7 @@ public class ChessWindow extends JFrame implements GameEventListener {
         boardPanel.setFlipped(boardFlipped);
     }
 
-    // ─── Layout ───────────────────────────────────────────────────────────────
+    // ─── Layout
 
     private void setupLayout() {
         getContentPane().setBackground(ColorTheme.PANEL_BACKGROUND);
@@ -119,7 +108,7 @@ public class ChessWindow extends JFrame implements GameEventListener {
         boardPanel.setFlipped(boardFlipped);
     }
 
-    // ─── GameEventListener ───────────────────────────────────────────────────
+    // ─── GameEventListener 
 
     @Override
     public void onBoardChanged(Board board) {

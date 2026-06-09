@@ -29,4 +29,5 @@ public class ColorTheme {
     public static final Color BUTTON_TEXT       = Color.WHITE;
     public static final Color STATUS_TEXT       = new Color(230, 230, 230);
     public static final Color THINKING_COLOR    = new Color(255, 200,  50);
+    public static final Color CONTROL_BTN_COLOR = new Color(168, 100, 50);
 }
