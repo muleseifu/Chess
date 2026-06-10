@@ -2,6 +2,7 @@ package chess.model.board;
 
 import chess.model.Move;
 import chess.model.PieceColor;
+import chess.model.PieceType;
 import chess.model.Position;
 import chess.model.pieces.Piece;
 
@@ -49,6 +50,12 @@ public class MoveValidator {
             for (int c = 0; c < 8; c++) {
                 Piece p = board.getPieceAt(new Position(r, c));
                 if (p == null || p.getColor() != byColor) continue;
+
+                if (p.getType() == PieceType.KING) {
+                    if (isAdjacent(new Position(r, c), pos)) return true;
+                    continue;
+                }
+
                 List<Move> pseudo = p.generatePseudoLegalMoves(new Position(r, c), board);
                 for (Move m : pseudo) {
                     if (m.getTo().equals(pos)) return true;
@@ -56,5 +63,11 @@ public class MoveValidator {
             }
         }
         return false;
+    }
+
+    private static boolean isAdjacent(Position a, Position b) {
+        int rowDistance = Math.abs(a.row - b.row);
+        int colDistance = Math.abs(a.col - b.col);
+        return rowDistance <= 1 && colDistance <= 1 && (rowDistance + colDistance) > 0;
     }
 }

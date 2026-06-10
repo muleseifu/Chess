@@ -45,8 +45,14 @@ public class ChessAI {
      */
     public void computeBestMoveAsync(Board board, PieceColor color, Consumer<Move> callback) {
         executor.submit(() -> {
-            Move move = strategy.chooseBestMove(new Board(board), color);
-            callback.accept(move);
+            Move move = null;
+            try {
+                move = strategy.chooseBestMove(new Board(board), color);
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+            final Move selectedMove = move;
+            javax.swing.SwingUtilities.invokeLater(() -> callback.accept(selectedMove));
         });
     }
 
